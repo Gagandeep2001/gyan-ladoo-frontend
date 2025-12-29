@@ -5,9 +5,9 @@ import {
 } from 'lucide-react';
 
 /**
- * GYAN LADOO - RECOVERY VERSION 3.0
- * This version hardcodes the CSS and Fonts to ensure the "2000s" look is gone.
- * It also handles the WordPress connection with extra security.
+ * GYAN LADOO - RECOVERY VERSION 3.1
+ * This version hardcodes the CSS and Fonts to ensure the modern look is preserved.
+ * Improved error messaging for CORS issues and connection handling.
  */
 
 const App = () => {
@@ -15,6 +15,8 @@ const App = () => {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  
+  // Note: If you moved your WordPress to a subdomain, update this to https://api.gyanladoo.com/graphql
   const [wpUrl, setWpUrl] = useState('https://gyanladoo.com/graphql');
 
   const fetchData = async () => {
@@ -74,7 +76,7 @@ const App = () => {
 
   useEffect(() => { 
     fetchData(); 
-  }, []);
+  }, [wpUrl]);
 
   const cleanExcerpt = (html) => html?.replace(/<[^>]*>?/gm, '') || "";
 
@@ -116,7 +118,7 @@ const App = () => {
         {error === "CORS_ERROR" && (
           <div className="bg-yellow-50 border-b border-yellow-100 p-3 flex items-center justify-center gap-3 text-xs font-sans text-yellow-800">
             <AlertCircle size={14} />
-            <span>Connection Blocked by CORS. Your WordPress must allow access. (Plugin: WPGraphQL CORS)</span>
+            <span>Connection Blocked by CORS. Please add the Access-Control-Allow-Origin header in your Hostinger hPanel or use a CORS plugin.</span>
             <button onClick={() => fetchData()} className="underline font-bold">Retry Connection</button>
           </div>
         )}
@@ -238,7 +240,7 @@ const App = () => {
           <p className="text-[#88636f] text-sm font-sans max-w-md mx-auto">
             Punjab's leading digital platform for literature and culture. Curated with love for students and scholars.
           </p>
-          <p className="text-[10px] font-bold text-gray-300 uppercase tracking-widest font-sans">© 2025 Gyan Ladoo Headless V3.0</p>
+          <p className="text-[10px] font-bold text-gray-300 uppercase tracking-widest font-sans">© 2025 Gyan Ladoo Headless V3.1</p>
         </footer>
       </div>
     </>
